@@ -39,6 +39,12 @@
             "backgroundColor": "#F9F1E5"
           }
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir Meu Mercado a acessar sua camera"
+        }
       ]
     ],
     "experiments": {
