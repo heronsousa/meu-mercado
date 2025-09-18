@@ -1,16 +1,25 @@
 import { Nfce } from "@/types";
+import { formatCurrency } from "@/utils/format-currency";
+import { formatDate } from "@/utils/format-date";
+import { getContrastColor } from "@/utils/get-constrast-color";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView, Text, View } from "react-native";
+import { Button } from "./Button";
 import { Card } from "./Card";
 
 type InvoiceSuccessProps = {
   nfce: Nfce;
+  handleScanOtherInvoice: () => void;
 };
 
-function InvoiceSuccess({ nfce }: InvoiceSuccessProps) {
+function InvoiceSuccess({ nfce, handleScanOtherInvoice }: InvoiceSuccessProps) {
   return (
-    <ScrollView className="min-h-screen p-4 gap-6 bg-background pt-100 mb-12">
-      <View className="text-center gap-4 flex items-center">
+    <ScrollView className="min-h-screen pt-20 px-4 gap-6 bg-background">
+      <Button variant='secondary' className="w-12 h-12 rounded-full" onPress={handleScanOtherInvoice}>
+        <Feather name="chevron-left" size={18} color="black" />
+      </Button>
+
+      <View className="text-center gap-4 flex items-center mb-8">
         <View className="w-16 h-16 bg-success rounded-2xl flex items-center justify-center mx-auto">
           <Feather name="check-square" size={24} color="green" />
         </View>
@@ -28,7 +37,7 @@ function InvoiceSuccess({ nfce }: InvoiceSuccessProps) {
             <View className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
               <Feather name="shopping-bag" size={16} color="red" />
             </View>
-            <Text className="text-lg font-semibold">{nfce.market}</Text>
+            <Text className="text-lg font-semibold">{nfce.store}</Text>
           </View>
           <View className="gap-1 text-muted-foreground">
             <View className="flex flex-row items-center gap-2">
@@ -39,7 +48,7 @@ function InvoiceSuccess({ nfce }: InvoiceSuccessProps) {
             </View>
             <View className="flex flex-row items-center gap-2">
               <Feather name="calendar" size={12} color="red" />
-              <Text className="text-xs">{nfce.date}</Text>
+              <Text className="text-xs">{formatDate(nfce.date)}</Text>
             </View>
             <View className="flex flex-row items-center gap-2">
               <Feather name="credit-card" size={12} color="red" />
@@ -49,7 +58,7 @@ function InvoiceSuccess({ nfce }: InvoiceSuccessProps) {
         </View>
         <View className="text-right">
           <Text className="text-muted-foreground">Total</Text>
-          <Text className="text-xl font-bold">R$ {nfce.totalPrice}</Text>
+          <Text className="text-xl font-bold">{formatCurrency(nfce.totalPrice)}</Text>
         </View>
       </Card>
 
@@ -66,41 +75,33 @@ function InvoiceSuccess({ nfce }: InvoiceSuccessProps) {
               <View style={{ maxWidth: "70%" }}>
                 <View className="flex self-start">
                   <Text
-                    className={`px-2 rounded-full text-[10px] font-medium bg-[#7f8c8d]`}
+                    className={`px-2 rounded-full text-[10px] font-medium text-gray-800`}
+                    style={{
+                      backgroundColor: `${item.category.color}`,
+                      color: getContrastColor(item.category.color),
+                    }}
                   >
-                    {item.categoryId.split("-")[0]}
+                    {item.category.description}
                   </Text>
                 </View>
-                {/* <View className="flex flex-row items-center gap-2 mb-1"> */}
                 <Text className="font-medium">{item.description}</Text>
-                {/* </View> */}
                 <Text className="text-sm text-muted-foreground">
-                  Qtd: {item.qtd} × R${" "}
-                  {(Number(item.price) / Number(item.qtd)).toFixed(2)}
+                  Qtd: {item.qtd} ×
+                  {formatCurrency((Number(item.price) / Number(item.qtd)).toFixed(2))}
                 </Text>
               </View>
-              <Text className="font-semibold w-16 text-right">
-                R$ {item.price}
+              <Text className="font-semibold w-16 text-right break-keep">
+                {formatCurrency(item.price)}
               </Text>
             </View>
           ))}
         </View>
       </Card>
 
-      {/* Botões de Ação */}
-      {/* <View className="flex gap-4">
-          <Button
-            variant="success"
-            onClick={handleSaveInvoice}
-            className="flex-1"
-          >
-            <CheckCircle className="w-4 h-4 mr-2" />
-            Salvar Nota Fiscal
-          </Button>
-          <Button variant="outline" onClick={handleReset}>
-            Escanear Outra
-          </Button>
-        </View> */}
+      <Button onPress={handleScanOtherInvoice}>
+        <Text className="text-white font-semibold">Escanear Outra Nota Fiscal</Text>
+      </Button>
+      <View className="h-24"></View>
     </ScrollView>
   );
 }

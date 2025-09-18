@@ -1,20 +1,19 @@
 import Idle from "@/components/Idle";
-import InvoiceSuccess from "@/components/InoiceSuccess";
-import Processing from "@/components/Processing";
-import Scanning from "@/components/Scanning";
-import { NFCE } from "@/contants/nfce";
+import InvoiceSuccess from "@/components/invoice-success";
+import Processing from "@/components/processing";
+import Scanning from "@/components/scanning";
 import { registerNfce } from "@/services/registerNfce";
 import { Nfce } from "@/types";
-import { extractNfceKey } from "@/utils/extractNfceKey";
+import { extractNfceKey } from "@/utils/extract-nfce-key";
 import { BarcodeScanningResult, useCameraPermissions } from "expo-camera";
 import { useState } from "react";
 
 export default function Scan() {
   const [permission, requestPermission] = useCameraPermissions();
-  const [nfce, setNfce] = useState<Nfce>(NFCE);
+  const [nfce, setNfce] = useState<Nfce>({} as Nfce);
   const [scanningStep, setScanningStep] = useState<
     "idle" | "scanning" | "processing" | "success"
-  >("success");
+  >("idle");
 
   async function handleScanQRCode() {
     if (!permission?.granted) {
@@ -61,5 +60,10 @@ export default function Scan() {
     return <Processing />;
   }
 
-  return <InvoiceSuccess nfce={nfce} />;
+  return (
+    <InvoiceSuccess
+      nfce={nfce}
+      handleScanOtherInvoice={() => setScanningStep("idle")}
+    />
+  );
 }
