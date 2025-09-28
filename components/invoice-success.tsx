@@ -15,7 +15,11 @@ type InvoiceSuccessProps = {
 function InvoiceSuccess({ nfce, handleScanOtherInvoice }: InvoiceSuccessProps) {
   return (
     <ScrollView className="min-h-screen pt-20 px-4 gap-6 bg-background">
-      <Button variant='secondary' className="w-12 h-12 rounded-full" onPress={handleScanOtherInvoice}>
+      <Button
+        variant="secondary"
+        className="w-12 h-12 rounded-full"
+        onPress={handleScanOtherInvoice}
+      >
         <Feather name="chevron-left" size={18} color="black" />
       </Button>
 
@@ -58,7 +62,9 @@ function InvoiceSuccess({ nfce, handleScanOtherInvoice }: InvoiceSuccessProps) {
         </View>
         <View className="text-right">
           <Text className="text-muted-foreground">Total</Text>
-          <Text className="text-xl font-bold">{formatCurrency(nfce.totalPrice)}</Text>
+          <Text className="text-xl font-bold">
+            {formatCurrency(nfce.totalPrice)}
+          </Text>
         </View>
       </Card>
 
@@ -87,10 +93,12 @@ function InvoiceSuccess({ nfce, handleScanOtherInvoice }: InvoiceSuccessProps) {
                 <Text className="font-medium">{item.description}</Text>
                 <Text className="text-sm text-muted-foreground">
                   Qtd: {item.qtd} ×
-                  {formatCurrency((Number(item.price) / Number(item.qtd)).toFixed(2))}
+                  {formatCurrency(
+                    (Number(item.price) / Number(item.qtd)).toFixed(2)
+                  )}
                 </Text>
               </View>
-              <Text className="font-semibold w-16 text-right break-keep">
+              <Text className="font-semibold w-16 text-right whitespace-nowrap">
                 {formatCurrency(item.price)}
               </Text>
             </View>
@@ -99,7 +107,9 @@ function InvoiceSuccess({ nfce, handleScanOtherInvoice }: InvoiceSuccessProps) {
       </Card>
 
       <Button onPress={handleScanOtherInvoice}>
-        <Text className="text-white font-semibold">Escanear Outra Nota Fiscal</Text>
+        <Text className="text-white font-semibold">
+          Escanear Outra Nota Fiscal
+        </Text>
       </Button>
       <View className="h-24"></View>
     </ScrollView>

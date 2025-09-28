@@ -1,5 +1,5 @@
-import Idle from "@/components/Idle";
-import InvoiceSuccess from "@/components/invoice-success";
+import Idle from "@/components/idle";
+import { InvoiceError } from "@/components/invoice-error";
 import Processing from "@/components/processing";
 import Scanning from "@/components/scanning";
 import { registerNfce } from "@/services/registerNfce";
@@ -11,8 +11,9 @@ import { useState } from "react";
 export default function Scan() {
   const [permission, requestPermission] = useCameraPermissions();
   const [nfce, setNfce] = useState<Nfce>({} as Nfce);
+  const [errorMessage, setErrorMessage] = useState("");
   const [scanningStep, setScanningStep] = useState<
-    "idle" | "scanning" | "processing" | "success"
+    "idle" | "scanning" | "processing" | "success" | "error"
   >("idle");
 
   async function handleScanQRCode() {
@@ -40,7 +41,14 @@ export default function Scan() {
           setScanningStep("success");
         }
       })
-      .catch(() => setScanningStep("idle"));
+      .catch((e) => {
+        if (typeof e === "string") {
+          setErrorMessage(e);
+        }
+
+        console.log(e);
+        setScanningStep("error");
+      });
   }
 
   if (scanningStep === "idle") {
@@ -60,10 +68,21 @@ export default function Scan() {
     return <Processing />;
   }
 
+  if (scanningStep === "error") {
+    return (
+      <InvoiceError
+        errorMessage={errorMessage}
+        handleScanOtherInvoice={() => setScanningStep("scanning")}
+        handleGoBack={() => setScanningStep("idle")}
+      />
+    );
+  }
+
   return (
-    <InvoiceSuccess
-      nfce={nfce}
-      handleScanOtherInvoice={() => setScanningStep("idle")}
+    <InvoiceError
+      errorMessage={errorMessage}
+      handleScanOtherInvoice={() => setScanningStep("scanning")}
+      handleGoBack={() => setScanningStep("idle")}
     />
   );
 }
