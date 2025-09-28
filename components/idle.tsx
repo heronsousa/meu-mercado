@@ -7,7 +7,7 @@ type IdleProps = {
   handleScanQRCode: () => void;
 };
 
-function Idle({ handleScanQRCode }: IdleProps) {
+export function Idle({ handleScanQRCode }: IdleProps) {
   return (
     <View className="min-h-screen p-4 flex flex-col items-center justify-center bg-background">
       <LinearGradient
@@ -48,5 +48,3 @@ function Idle({ handleScanQRCode }: IdleProps) {
     </View>
   );
 }
-
-export default Idle;

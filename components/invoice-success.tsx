@@ -12,7 +12,10 @@ type InvoiceSuccessProps = {
   handleScanOtherInvoice: () => void;
 };
 
-function InvoiceSuccess({ nfce, handleScanOtherInvoice }: InvoiceSuccessProps) {
+export function InvoiceSuccess({
+  nfce,
+  handleScanOtherInvoice,
+}: InvoiceSuccessProps) {
   return (
     <ScrollView className="min-h-screen pt-20 px-4 gap-6 bg-background">
       <Button
@@ -115,5 +118,3 @@ function InvoiceSuccess({ nfce, handleScanOtherInvoice }: InvoiceSuccessProps) {
     </ScrollView>
   );
 }
-
-export default InvoiceSuccess;

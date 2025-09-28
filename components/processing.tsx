@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 
-function Processing() {
+export function Processing() {
   return (
     <View className="min-h-screen p-4 flex flex-col items-center justify-center gap-8 bg-background">
       <View className="text-center gap-4">
@@ -13,7 +13,7 @@ function Processing() {
           Extraindo informações da nota fiscal
         </Text>
       </View>
-      
+
       <View className="gap-2 text-center text-sm text-muted-foreground">
         <Text>✅ QR Code lido com sucesso</Text>
         <Text>🔄 Buscando dados da nota fiscal...</Text>
@@ -22,5 +22,3 @@ function Processing() {
     </View>
   );
 }
-
-export default Processing;

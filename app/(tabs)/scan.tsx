@@ -1,7 +1,8 @@
-import Idle from "@/components/idle";
+import { Idle } from "@/components/idle";
 import { InvoiceError } from "@/components/invoice-error";
-import Processing from "@/components/processing";
-import Scanning from "@/components/scanning";
+import { InvoiceSuccess } from "@/components/invoice-success";
+import { Processing } from "@/components/processing";
+import { Scanning } from "@/components/scanning";
 import { registerNfce } from "@/services/registerNfce";
 import { Nfce } from "@/types";
 import { extractNfceKey } from "@/utils/extract-nfce-key";
@@ -79,10 +80,9 @@ export default function Scan() {
   }
 
   return (
-    <InvoiceError
-      errorMessage={errorMessage}
-      handleScanOtherInvoice={() => setScanningStep("scanning")}
-      handleGoBack={() => setScanningStep("idle")}
+    <InvoiceSuccess
+      nfce={nfce}
+      handleScanOtherInvoice={() => setScanningStep("idle")}
     />
   );
 }
