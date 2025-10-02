@@ -26,3 +26,18 @@ export type Nfce = {
   paymentMethod: string;
   products: Product[];
 };
+
+export type NfceSummary = {
+  invoiceCount: number;
+  totalAmount: string;
+  averageValue: string;
+  nfces: {
+    id: string;
+    key: string;
+    date: string;
+    store: string;
+    total: string;
+    productCount: number;
+    categories: { name: string; color: string }[];
+  }[];
+};

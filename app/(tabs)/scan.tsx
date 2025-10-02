@@ -3,7 +3,7 @@ import { InvoiceError } from "@/components/invoice-error";
 import { InvoiceSuccess } from "@/components/invoice-success";
 import { Processing } from "@/components/processing";
 import { Scanning } from "@/components/scanning";
-import { registerNfce } from "@/services/registerNfce";
+import { registerNfce } from "@/services/register-nfce";
 import { Nfce } from "@/types";
 import { extractNfceKey } from "@/utils/extract-nfce-key";
 import { BarcodeScanningResult, useCameraPermissions } from "expo-camera";
